@@ -9,11 +9,12 @@ import {
     ScrollView,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { completeOnboarding, setStep } from '../../redux/onboardingSlice';
+import { completeOnboardingAsync , setStep } from '../../redux/onboardingSlice';
 import { useNavigation } from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../navigation/AppNavigator.tsx';
 import CustomText from '../../components/CustomText';
+import { AppDispatch } from '../../redux/store';
 
 const { width, height } = Dimensions.get('window');
 
@@ -25,7 +26,7 @@ const features = [
 
 const PaywallScreen: React.FC = () => {
     const [selectedPlan, setSelectedPlan] = useState('yearly');
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
     type NavigationProps = NativeStackNavigationProp<RootStackParamList, 'PaywallScreen'>;
     const navigation = useNavigation<NavigationProps>();
@@ -35,8 +36,8 @@ const PaywallScreen: React.FC = () => {
         dispatch(setStep(3));
     }, [dispatch]);
 
-    const handleClose = () => {
-        dispatch(completeOnboarding());
+    const handleClose = async () => {
+        await dispatch(completeOnboardingAsync()); // bunu çağır
         navigation.reset({
             index: 0,
             routes: [{ name: 'HomeScreen' }],
