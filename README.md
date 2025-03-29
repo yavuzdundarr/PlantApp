@@ -50,6 +50,9 @@ yarn install
 4. Projeyi Çalıştır
 
 Android için:
+
+Anroid Studio emülatörünü çalıştırdıktan sonra;
+
 npm run android
 # veya
 yarn android
