@@ -1,45 +1,66 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
 const PremiumBoxComponent: React.FC = () => {
     return (
         <TouchableOpacity style={styles.container}>
-            <Text style={styles.icon}>📩</Text>
+            {/* Mail Icon */}
+            <Image
+                source={require('../../assets/icons/mailIcon.png')}
+                style={styles.mailIcon}
+            />
+
+            {/* Metinler */}
             <View style={{ flex: 1 }}>
                 <Text style={styles.title}>FREE Premium Available</Text>
                 <Text style={styles.subtitle}>Tap to upgrade your account!</Text>
             </View>
-            <Text style={styles.arrow}>›</Text>
+
+            <Image
+                source={require('../../assets/icons/arrowIcon.png')}
+                style={styles.arrow}
+            />
         </TouchableOpacity>
     );
 };
+
+export default PremiumBoxComponent;
 
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         backgroundColor: '#24201A',
-        padding: 15,
         borderRadius: 12,
+        padding: 15,
+        marginHorizontal: 20,
+        marginTop: 20,
+        marginBottom: 15,
         alignItems: 'center',
-        marginVertical: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+        elevation: 3,
     },
-    icon: {
-        fontSize: 24,
-        marginRight: 10,
+    mailIcon: {
+        width: 48,
+        height: 40,
+        marginRight: 20,
     },
     title: {
         color: '#E5C990',
-        fontWeight: 'bold',
-        fontSize: 15,
+        fontWeight: '700',
+        fontSize: 16,
+        letterSpacing: -0.32,
     },
     subtitle: {
         color: '#E5C99090',
         fontSize: 13,
+        marginTop: 2,
     },
     arrow: {
-        fontSize: 24,
-        color: '#E5C990',
+        width: 24,
+        height: 24,
+        marginLeft: 10,
     },
 });
-
-export default PremiumBoxComponent;

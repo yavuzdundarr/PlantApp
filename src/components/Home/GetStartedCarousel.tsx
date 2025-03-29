@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ImageBackground, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, ImageBackground, StyleSheet, ScrollView, TouchableOpacity, Dimensions, Linking } from 'react-native';
 
 interface Question {
     id: number;
@@ -16,14 +16,27 @@ interface Props {
 const { width } = Dimensions.get('window');
 
 const GetStartedCarousel: React.FC<Props> = ({ data }) => {
+    const handlePress = (uri: string) => {
+        Linking.openURL(uri).catch((err) => console.error('Failed to open URL:', err));
+    };
+
     return (
         <View style={styles.container}>
             <Text style={styles.header}>Get Started</Text>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <ScrollView
+                horizontal
+                pagingEnabled
+                snapToAlignment="center"
+                decelerationRate="fast"
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.carouselContainer}
+            >
                 {data.map((item) => (
-                    <TouchableOpacity key={item.id} style={styles.card}>
+                    <TouchableOpacity key={item.id} style={styles.card} onPress={() => handlePress(item.uri)}>
                         <ImageBackground source={{ uri: item.image_uri }} style={styles.image}>
-                            <Text style={styles.cardTitle}>{item.title}</Text>
+                            <View style={styles.textWrapper}>
+                                <Text style={styles.cardTitle}>{item.title}</Text>
+                            </View>
                         </ImageBackground>
                     </TouchableOpacity>
                 ))}
@@ -32,6 +45,8 @@ const GetStartedCarousel: React.FC<Props> = ({ data }) => {
     );
 };
 
+export default GetStartedCarousel;
+
 const styles = StyleSheet.create({
     container: {
         marginVertical: 15,
@@ -39,20 +54,31 @@ const styles = StyleSheet.create({
     header: {
         fontSize: 18,
         fontWeight: 'bold',
-        marginBottom: 10,
+        marginBottom: 20,
         color: '#222',
+        paddingHorizontal: width * 0.07,
+    },
+    carouselContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: width * 0.07,
     },
     card: {
-        width: width * 0.6,
-        height: 180,
+        width: width * 0.65,
+        height: width * 0.45,
         borderRadius: 12,
         overflow: 'hidden',
         marginRight: 15,
     },
     image: {
         flex: 1,
-        justifyContent: 'flex-end',
-        padding: 10,
+    },
+    textWrapper: {
+        position: 'absolute',
+        top: '70%',
+        left: '5%',
+        right: '5%',
     },
     cardTitle: {
         color: '#fff',
@@ -60,5 +86,3 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
 });
-
-export default GetStartedCarousel;
