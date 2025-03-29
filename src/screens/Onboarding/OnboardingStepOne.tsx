@@ -1,5 +1,15 @@
 import React, { useEffect } from 'react';
-import {View, Image, TouchableOpacity, StyleSheet, Dimensions, SafeAreaView, ImageBackground, Text} from 'react-native';
+import {
+    View,
+    Image,
+    TouchableOpacity,
+    StyleSheet,
+    Dimensions,
+    SafeAreaView,
+    ImageBackground,
+    Text,
+    BackHandler
+} from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
@@ -19,6 +29,11 @@ const OnboardingStepOne: React.FC = () => {
 
     useEffect(() => {
         dispatch(setStep(1));
+
+        const backAction = () => true;
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+
+        return () => backHandler.remove();
     }, [dispatch]);
 
     return (

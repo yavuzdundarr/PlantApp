@@ -7,6 +7,7 @@ import {
     Dimensions,
     SafeAreaView,
     ScrollView,
+    BackHandler,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { completeOnboardingAsync , setStep } from '../../redux/onboardingSlice';
@@ -34,7 +35,13 @@ const PaywallScreen: React.FC = () => {
 
     useEffect(() => {
         dispatch(setStep(3));
+
+        const backAction = () => true;
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+
+        return () => backHandler.remove();
     }, [dispatch]);
+
 
     const handleClose = async () => {
         await dispatch(completeOnboardingAsync()); // bunu çağır

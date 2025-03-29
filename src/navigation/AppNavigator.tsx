@@ -35,7 +35,7 @@ const AppNavigator = () => {
         <NavigationContainer>
             <Stack.Navigator
                 initialRouteName={completed ? 'HomeScreen' : 'GetStarted'}
-                screenOptions={{ headerShown: false }}
+                screenOptions={{ headerShown: false, gestureEnabled: false }}
             >
                 <Stack.Screen name="GetStarted" component={GetStarted} />
                 <Stack.Screen name="OnboardingStepOne" component={OnboardingStepOne} />

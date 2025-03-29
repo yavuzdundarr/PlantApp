@@ -7,7 +7,7 @@ import {
     StyleSheet,
     Dimensions,
     SafeAreaView,
-    ImageBackground,
+    ImageBackground, BackHandler,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { setStep } from '../../redux/onboardingSlice';
@@ -28,6 +28,11 @@ const OnboardingStepTwo: React.FC = () => {
 
     useEffect(() => {
         dispatch(setStep(2));
+
+        const backAction = () => true;
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+
+        return () => backHandler.remove();
     }, [dispatch]);
 
     return (
